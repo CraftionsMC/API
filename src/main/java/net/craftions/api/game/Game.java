@@ -4,8 +4,11 @@
  */
 package net.craftions.api.game;
 
+import net.craftions.api.Api;
 import net.craftions.api.color.ColorCode;
 import net.craftions.api.config.Config;
+import net.craftions.api.language.Language;
+import org.bukkit.Bukkit;
 
 import java.io.File;
 import java.io.IOException;
@@ -41,7 +44,9 @@ public class Game {
 
     // Timer variables
     private Integer _startTimer;
+    private Integer _startTimerId;
     private Integer _endTimer;
+    private Integer _endTimerId;
 
     // State variables
     private Boolean isStarting = false;
@@ -118,7 +123,15 @@ public class Game {
      * Start the game with its default values
      */
     public void start(){
-
+        _startTimerId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Api.getInstance(), new Runnable() {
+            @Override
+            public void run() {
+                _startTimer--;
+                if(_startTimer.toString().endsWith("0") || _startTimer.toString().endsWith("5") || _startTimer < 10){
+                    Bukkit.broadcastMessage(Language.getMessage("en_us", 0x0).replaceAll("%s", _startTimer.toString()));
+                }
+            }
+        }, 0, 20L);
     }
 
     /**

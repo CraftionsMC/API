@@ -1,5 +1,6 @@
 package net.craftions.api;
 
+import net.craftions.api.language.Language;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Api extends JavaPlugin {
@@ -8,6 +9,7 @@ public final class Api extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Language.initMaps();
         instance = this;
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
     }
