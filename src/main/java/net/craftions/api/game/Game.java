@@ -37,6 +37,29 @@ public class Game {
     private Boolean isRunning;
 
     /**
+     * Start the game with its default values
+     */
+    public void start(){
+
+    }
+
+    /**
+     * Start the game with a specific start time (used for /start)
+     * @param time The time after the game starts.
+     */
+    public void start(int time){
+        this.startTime = time;
+        this.start();
+    }
+
+    /**
+     * Starts the final game (after countdown)
+     */
+    protected void startFinal(){
+
+    }
+
+    /**
      * @return true if the game is currently starting
      */
     public Boolean getStarting() {
