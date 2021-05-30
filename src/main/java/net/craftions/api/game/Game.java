@@ -44,8 +44,8 @@ public class Game {
     private Integer _endTimer;
 
     // State variables
-    private Boolean isStarting;
-    private Boolean isRunning;
+    private Boolean isStarting = false;
+    private Boolean isRunning = false;
 
     /**
      * @param name The name of the game
