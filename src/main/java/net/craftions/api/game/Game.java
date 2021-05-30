@@ -37,6 +37,21 @@ public class Game {
     private Boolean isRunning;
 
     /**
+     * @param name The name of the game
+     * @param colorCode The color code used for the prefix
+     * @param minPlayers The minimum number of players
+     * @param startTime The time after the game starts when enough players joined
+     * @param endTime The time after the game ends
+     */
+    public Game(String name, String colorCode, Integer minPlayers, Integer startTime, Integer endTime){
+        this.name = name;
+        this.colorCode = colorCode;
+        this.minPlayers = minPlayers;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    /**
      * Start the game with its default values
      */
     public void start(){
