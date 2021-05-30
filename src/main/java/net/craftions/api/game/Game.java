@@ -4,6 +4,13 @@
  */
 package net.craftions.api.game;
 
+import net.craftions.api.color.ColorCode;
+import net.craftions.api.config.Config;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
 public class Game {
 
     // Global variables
@@ -27,6 +34,10 @@ public class Game {
      * The time to end the game
      */
     private Integer endTime;
+    /**
+     * The configuration of the game
+     */
+    private Config config;
 
     // Timer variables
     private Integer _startTimer;
@@ -49,6 +60,49 @@ public class Game {
         this.minPlayers = minPlayers;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    /**
+     * Creates a Game Instance with values from the given config
+     * @param configName The name of the Configuration Instance
+     */
+    public Game(String configName){
+        this.config = Config.getInstance(configName);
+        this.name = (String) this.config.get("name");
+        this.colorCode = ColorCode.from((String) this.config.get("colorCode"));
+        this.minPlayers = (Integer) config.get("minPlayers");
+        this.startTime = (Integer) config.get("startTime");
+        this.endTime = (Integer) config.get("endTime");
+    }
+
+    /**
+     * Saves the current Game options (name, color code, ...) to the configuration
+     */
+    public void saveToConfig(){
+        if(this.config == null){
+            File root = new File("plugins/" + this.name);
+            File configFile = new File(root.getPath() + "/game.config.yml");
+            if(!root.exists()){
+                root.mkdirs();
+            }
+            if(!configFile.exists()){
+                try {
+                    configFile.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            this.config = new Config(configFile, "_temp:" + UUID.randomUUID());
+            this.config.set("name", this.name);
+            this.config.set("colorCode", this.colorCode);
+            this.config.set("minPlayers", this.minPlayers);
+            this.config.set("startTime", this.startTime);
+            this.config.set("endTime", this.endTime);
+            this.config.reload(true);
+            this.config = null;
+        }else {
+            throw new UnsupportedOperationException("You can not use this method if you have loaded the settings from a config.");
+        }
     }
 
     /**
