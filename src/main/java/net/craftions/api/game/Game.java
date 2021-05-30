@@ -63,7 +63,7 @@ public class Game {
     }
 
     /**
-     * Creates a Game Instance with values from the given config
+     * Creates a Game Instance with values from the given config instance
      * @param configName The name of the Configuration Instance
      */
     public Game(String configName){
@@ -73,6 +73,15 @@ public class Game {
         this.minPlayers = (Integer) config.get("minPlayers");
         this.startTime = (Integer) config.get("startTime");
         this.endTime = (Integer) config.get("endTime");
+    }
+
+    /**
+     * Creates a Game Instance from a Config File
+     * @return The created game
+     */
+    public static Game fromConfigFile(String gameName){
+        new Config(new File("plugins/" + gameName + "/game.config.yml"), gameName + ":temp-loaded:");
+        return new Game(gameName + ":temp-loaded:");
     }
 
     /**
@@ -140,5 +149,14 @@ public class Game {
      */
     public Boolean getRunning() {
         return isRunning;
+    }
+
+    /**
+     * Checks if a game can be loaded from a config
+     * @param gameName The name of the saved game
+     * @return true if the game can be loaded from a config
+     */
+    public static boolean canLoadFromConfig(String gameName){
+        return new File("plugins/" + gameName + "/game.config.yml").exists();
     }
 }
