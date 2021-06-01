@@ -17,8 +17,10 @@ public class Language {
     public static String normalColor = ColorCode.from("&7");
 
     public static void initMaps(){
-        de_de.put(0x0, normalColor + "Das Spiel startet in " + keyWordColor + "%s " + normalColor + "Sekunden");
-        en_us.put(0x0, normalColor + "The game starts in " + keyWordColor + "%s " + normalColor + " seconds");
+        de_de.put(0x0, normalColor + "Das Spiel startet in " + keyWordColor + "=s " + normalColor + "Sekunden");
+        en_us.put(0x0, normalColor + "The game starts in " + keyWordColor + "=s " + normalColor + " seconds");
+        de_de.put(0x1, normalColor + "Das Spiel endet in " + keyWordColor + "=s " + normalColor + "Sekunden");
+        en_us.put(0x1, normalColor + "The game ends in " + keyWordColor + "=s " + normalColor + " seconds");
     }
 
     public static String getMessage(String local, int messageID){
