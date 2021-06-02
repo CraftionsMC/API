@@ -4,6 +4,7 @@
 package net.craftions.api.game.events.bukkit;
 
 import net.craftions.api.game.Game;
+import net.craftions.api.language.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +20,7 @@ public class EventPlayerJoin implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
+        e.setJoinMessage(Language.getMessage(this.game.getLanguageCode(), 0x2).replaceAll("=p", e.getPlayer().getName()));
         if(!this.game.getStarting() && !this.game.getRunning()){
             if(Bukkit.getOnlinePlayers().size() >= this.game.getMinPlayers()){
                 this.game.start();

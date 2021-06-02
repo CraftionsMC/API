@@ -25,6 +25,6 @@ public class GameEndEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return null;
+        return new HandlerList();
     }
 }

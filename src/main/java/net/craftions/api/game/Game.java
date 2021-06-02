@@ -73,6 +73,7 @@ public class Game {
         this.startTime = startTime;
         this.endTime = endTime;
         this.languageCode = languageCode;
+        this.registerListeners();
     }
 
     /**
@@ -87,6 +88,7 @@ public class Game {
         this.startTime = (Integer) config.get("startTime");
         this.endTime = (Integer) config.get("endTime");
         this.languageCode = (String) config.get("languageCode");
+        this.registerListeners();
     }
 
     /**
@@ -133,6 +135,7 @@ public class Game {
      * Start the game with its default values
      */
     public void start(){
+        _startTimer = startTime;
         _startTimerId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Api.getInstance(), new Runnable() {
             @Override
             public void run() {

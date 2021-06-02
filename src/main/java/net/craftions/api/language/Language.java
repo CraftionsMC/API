@@ -13,18 +13,20 @@ public class Language {
     protected static HashMap<Integer, String> de_de = new HashMap<>();
     protected static HashMap<Integer, String> en_us = new HashMap<>();
 
-    public static String keyWordColor = ColorCode.from("&c");
-    public static String normalColor = ColorCode.from("&7");
+    public static String keyWordColor = ColorCode.to("&c");
+    public static String normalColor = ColorCode.to("&7");
 
     public static void initMaps(){
         de_de.put(0x0, normalColor + "Das Spiel startet in " + keyWordColor + "=s " + normalColor + "Sekunden");
         en_us.put(0x0, normalColor + "The game starts in " + keyWordColor + "=s " + normalColor + " seconds");
         de_de.put(0x1, normalColor + "Das Spiel endet in " + keyWordColor + "=s " + normalColor + "Sekunden");
         en_us.put(0x1, normalColor + "The game ends in " + keyWordColor + "=s " + normalColor + " seconds");
+        de_de.put(0x2, keyWordColor + "=p" + normalColor + " hat das Spiel betreten");
+        en_us.put(0x2, keyWordColor + "=p" + normalColor + " joined the game");
     }
 
     public static String getMessage(String local, int messageID){
-        HashMap<Integer, String> toTake = null;
+        HashMap<Integer, String> toTake;
         switch (local){
             case "de_de":
                 toTake = de_de;
