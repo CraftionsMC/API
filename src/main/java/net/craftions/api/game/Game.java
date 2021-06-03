@@ -12,6 +12,7 @@ import net.craftions.api.game.events.GameStartEvent;
 import net.craftions.api.game.events.bukkit.EventPlayerJoin;
 import net.craftions.api.language.Language;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
@@ -22,6 +23,9 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.UUID;
 
+/**
+ * This class is used for round-based team games.
+ */
 public class Game {
 
     // Global variables
@@ -57,6 +61,10 @@ public class Game {
      * The default inventory each player should get when the game starts
      */
     private Inventory defaultInventory;
+    /**
+     * The place where each player will be teleported to while there aren't enough players on the server
+     */
+    private Location waitingLobby;
     // Teams
     /**
      * Registered teams
@@ -223,7 +231,6 @@ public class Game {
     protected void initialize(){
         // listeners
         Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(this), Api.getInstance());
-
     }
 
     /**
@@ -357,5 +364,19 @@ public class Game {
      */
     public void setDefaultInventory(Inventory defaultInventory) {
         this.defaultInventory = defaultInventory;
+    }
+
+    /**
+     * @param waitingLobby The place where each player will be teleported to while there aren't enough players on the server
+     */
+    public void setWaitingLobby(Location waitingLobby) {
+        this.waitingLobby = waitingLobby;
+    }
+
+    /**
+     * @return The place where each player will be teleported to while there aren't enough players on the server
+     */
+    public Location getWaitingLobby() {
+        return waitingLobby;
     }
 }
