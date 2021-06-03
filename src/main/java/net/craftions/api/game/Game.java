@@ -12,9 +12,13 @@ import net.craftions.api.game.events.GameStartEvent;
 import net.craftions.api.game.events.bukkit.EventPlayerJoin;
 import net.craftions.api.language.Language;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.UUID;
 
 public class Game {
@@ -48,6 +52,24 @@ public class Game {
      * The language of the game
      */
     private String languageCode;
+    // Teams
+    /**
+     * Registered teams
+     */
+    private ArrayList<Team> teams = new ArrayList<>();
+    /**
+     * Use Teams
+     */
+    private boolean useTeams;
+    /**
+     * The size of each Team
+     */
+    private Integer teamSize;
+    /**
+     * Use Team Spawns instead of normal game spawn
+     */
+    private boolean useTeamSpawns;
+
 
     // Timer variables
     private Integer _startTimer;
@@ -160,6 +182,27 @@ public class Game {
     }
 
     /**
+     * Used for choosing the teams
+     */
+    protected void processTeams(){
+        if(this.useTeams){
+            HashMap<Team, Integer> _teams = new HashMap<>();
+            Random random = new Random();
+            int takenPlayers = 0;
+            for(Player p : Bukkit.getOnlinePlayers()){
+                boolean found = false;
+                while(!found){
+                    int r = random.nextInt(this.teams.size());
+                    Team choosenTeam = this.teams.get(r);
+                    if(_teams.get(choosenTeam).equals(this.teamSize)){
+
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * Starts the final game (after countdown)
      */
     protected void startFinal(){
@@ -260,5 +303,33 @@ public class Game {
      */
     public String getLanguageCode() {
         return languageCode;
+    }
+
+    /**
+     * @param teamSize The size of each team
+     */
+    public void setTeamSize(Integer teamSize) {
+        this.teamSize = teamSize;
+    }
+
+    /**
+     * @param team The team to be added to the game
+     */
+    public void addTeam(Team team){
+        this.teams.add(team);
+    }
+
+    /**
+     * @param useTeams True if the game should use teams
+     */
+    public void setUseTeams(boolean useTeams) {
+        this.useTeams = useTeams;
+    }
+
+    /**
+     * @param useTeamsSpawns True if the game should use team spawns
+     */
+    public void setUseTeamSpawns(boolean useTeamsSpawns) {
+        this.useTeamSpawns = useTeamsSpawns;
     }
 }

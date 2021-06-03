@@ -48,7 +48,7 @@ public class ColorCode {
     }
 
     /**
-     * Reformats a text (changes §-color codes to &-color codes)
+     * Reformats a text (changes {@literal §}- color codes to {@literal &}-color codes)
      * @param text The text to be reformatted
      * @return The reformatted text
      */
@@ -61,7 +61,7 @@ public class ColorCode {
     }
 
     /**
-     * Reformats a text (changes &-color codes to §-color codes)
+     * Reformats a text (changes {@literal &}-color codes to {@literal §}-color codes)
      * @param text The text to be reformatted
      * @return The reformatted text
      */

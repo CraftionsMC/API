@@ -23,6 +23,8 @@ public class Language {
         en_us.put(0x1, normalColor + "The game ends in " + keyWordColor + "=s " + normalColor + " seconds");
         de_de.put(0x2, keyWordColor + "=p" + normalColor + " hat das Spiel betreten");
         en_us.put(0x2, keyWordColor + "=p" + normalColor + " joined the game");
+        de_de.put(0x3, normalColor + "Du bist in team " + keyWordColor + "=t");
+        en_us.put(0x3, normalColor + "You are in team " + keyWordColor + "=t");
     }
 
     public static String getMessage(String local, int messageID){
@@ -42,5 +44,10 @@ public class Language {
         }else {
             return "§cThe message with the ID §e" + messageID + " §ccould not be found.";
         }
+    }
+
+    public static class Code {
+        public static String GERMAN = "de_de";
+        public static String ENGLISH = "en_us";
     }
 }
