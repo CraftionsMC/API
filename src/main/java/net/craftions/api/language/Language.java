@@ -25,6 +25,8 @@ public class Language {
         en_us.put(0x2, keyWordColor + "=p" + normalColor + " joined the game");
         de_de.put(0x3, normalColor + "Du bist in team " + keyWordColor + "=t");
         en_us.put(0x3, normalColor + "You are in team " + keyWordColor + "=t");
+        de_de.put(0x4, normalColor + "Das Spiel " + keyWordColor + "läuft " + normalColor + "bereits. Du bist" + keyWordColor + " Zuschauer.");
+        en_us.put(0x4, normalColor + "The game is already " + keyWordColor + "running " + normalColor + ". You are a " + keyWordColor + " spectator.");
     }
 
     public static String getMessage(String local, int messageID){

@@ -13,6 +13,7 @@ import net.craftions.api.game.events.bukkit.EventPlayerJoin;
 import net.craftions.api.language.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,6 +53,10 @@ public class Game {
      * The language of the game
      */
     private String languageCode;
+    /**
+     * The default inventory each player should get when the game starts
+     */
+    private Inventory defaultInventory;
     // Teams
     /**
      * Registered teams
@@ -95,7 +100,7 @@ public class Game {
         this.startTime = startTime;
         this.endTime = endTime;
         this.languageCode = languageCode;
-        this.registerListeners();
+        this.initialize();
     }
 
     /**
@@ -110,7 +115,7 @@ public class Game {
         this.startTime = (Integer) config.get("startTime");
         this.endTime = (Integer) config.get("endTime");
         this.languageCode = (String) config.get("languageCode");
-        this.registerListeners();
+        this.initialize();
     }
 
     /**
@@ -207,11 +212,18 @@ public class Game {
      */
     protected void startFinal(){
         Bukkit.getPluginManager().callEvent(new GameStartEvent(this));
+        if(this.getDefaultInventory() != null){
+            for(Player p : Bukkit.getOnlinePlayers()){
+                p.getInventory().setContents(this.getDefaultInventory().getContents());
+            }
+        }
         end();
     }
 
-    protected void registerListeners(){
+    protected void initialize(){
+        // listeners
         Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(this), Api.getInstance());
+
     }
 
     /**
@@ -331,5 +343,19 @@ public class Game {
      */
     public void setUseTeamSpawns(boolean useTeamsSpawns) {
         this.useTeamSpawns = useTeamsSpawns;
+    }
+
+    /**
+     * @return The inventory each player gets when the game starts
+     */
+    public Inventory getDefaultInventory() {
+        return defaultInventory;
+    }
+
+    /**
+     * @param defaultInventory The inventory each player get when the game starts
+     */
+    public void setDefaultInventory(Inventory defaultInventory) {
+        this.defaultInventory = defaultInventory;
     }
 }

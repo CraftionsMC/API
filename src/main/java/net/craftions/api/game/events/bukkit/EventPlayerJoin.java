@@ -14,17 +14,22 @@ public class EventPlayerJoin implements Listener {
 
     public Game game;
 
-    public EventPlayerJoin(Game game){
+    public EventPlayerJoin(Game game) {
         this.game = game;
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e){
+    public void onPlayerJoin(PlayerJoinEvent e) {
         e.setJoinMessage(Language.getMessage(this.game.getLanguageCode(), 0x2).replaceAll("=p", e.getPlayer().getName()));
-        if(!this.game.getStarting() && !this.game.getRunning()){
-            if(Bukkit.getOnlinePlayers().size() >= this.game.getMinPlayers()){
+        if (!this.game.getStarting() && !this.game.getRunning()) {
+            if (Bukkit.getOnlinePlayers().size() >= this.game.getMinPlayers()) {
                 this.game.start();
             }
+        } else {
+            if (this.game.getRunning()) {
+                e.getPlayer().sendMessage(Language.getMessage(this.game.getLanguageCode(), 0x4));
+            }
         }
+
     }
 }
