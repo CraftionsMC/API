@@ -114,7 +114,7 @@ public class Game {
         this.endTime = endTime;
         this.languageCode = languageCode;
         if(GameManager.createGame(this, false)){
-
+            this.initialize();
         }else {
             try {
                 throw new GameException("Could not create the game! The name is already taken!");
@@ -122,7 +122,6 @@ public class Game {
                 e.printStackTrace();
             }
         }
-        this.initialize();
     }
 
     /**
