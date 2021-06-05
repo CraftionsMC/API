@@ -5,12 +5,16 @@
 package net.craftions.api.game.events;
 
 import net.craftions.api.game.Game;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
-public class GameStartEvent extends Event {
+public class GameStartEvent extends Event implements Cancellable {
 
     private Game game;
+
+    public static HandlerList HANDLERS = new HandlerList();
 
     public GameStartEvent(Game game){
         this.game = game;
@@ -24,7 +28,21 @@ public class GameStartEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
-        return new HandlerList();
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
+
+    public static HandlerList getHandlerList(){
+        return HANDLERS;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
+
+    @Override
+    public void setCancelled(boolean cancel) {
+        throw new UnsupportedOperationException("You can not cancel this event!");
     }
 }

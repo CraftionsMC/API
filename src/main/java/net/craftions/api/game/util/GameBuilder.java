@@ -3,7 +3,6 @@
  */
 package net.craftions.api.game.util;
 
-import jdk.jfr.Experimental;
 import net.craftions.api.game.Game;
 import net.craftions.api.game.Team;
 import org.bukkit.Location;
@@ -11,7 +10,6 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 
-@Experimental
 public class GameBuilder {
 
     // Global variables
@@ -144,7 +142,6 @@ public class GameBuilder {
         for(Team t : this.teams){
             game.addTeam(t);
         }
-        System.out.println("TS: " + game.getTeams().size());
         return game;
     }
 }
