@@ -26,17 +26,11 @@ public class NetUtils {
         }
     }
 
-    public static String httpGet(String webURL) throws Exception {
+    public static HttpURLConnection httpGet(String webURL) throws Exception {
         StringBuilder result = new StringBuilder();
         URL url = new URL(webURL);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
-        try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(conn.getInputStream()))) {
-            for (String line; (line = reader.readLine()) != null; ) {
-                result.append(line);
-            }
-        }
-        return result.toString();
+        return conn;
     }
 }
