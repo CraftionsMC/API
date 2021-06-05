@@ -217,6 +217,9 @@ public class Game {
     protected void processTeams() {
         if (this.useTeams) {
             HashMap<Team, Integer> _teams = new HashMap<>();
+            for(Team t : this.teams){
+                _teams.put(t, 0);
+            }
             Random random = new Random();
             for (Player p : Bukkit.getOnlinePlayers()) {
                 while (true) {
@@ -235,11 +238,9 @@ public class Game {
      * @return The team of the player or null
      */
     public Team getPlayerTeam(Player p) {
-        if (!this.getStarting() && this.getRunning()) {
-            for (Team t : this.getTeams()) {
-                if (t.getPlayers().contains(p)) {
-                    return t;
-                }
+        for (Team t : this.getTeams()) {
+            if (t.getPlayers().contains(p)) {
+                return t;
             }
         }
         return null;

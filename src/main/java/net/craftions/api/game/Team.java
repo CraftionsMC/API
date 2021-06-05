@@ -37,6 +37,7 @@ public class Team {
     public Team(String name, String color){
         this.name = name;
         this.color = color;
+        this.players = new ArrayList<>();
     }
 
     /**

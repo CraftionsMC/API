@@ -144,6 +144,7 @@ public class GameBuilder {
         for(Team t : this.teams){
             game.addTeam(t);
         }
+        System.out.println("TS: " + game.getTeams().size());
         return game;
     }
 }

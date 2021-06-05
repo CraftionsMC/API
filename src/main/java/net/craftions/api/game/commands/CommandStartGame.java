@@ -23,7 +23,7 @@ public class CommandStartGame implements CommandExecutor {
                 sender.sendMessage("§aSuccessfully §7started the game §e" + game.getName());
             }else {
                 try {
-                    game.start(Integer.parseInt(args[0]));
+                    game.start(Integer.parseInt(args[0]) + 1);
                     sender.sendMessage("§aSuccessfully §7started the game §e" + game.getName());
                 }catch (NumberFormatException ex){
                     sender.sendMessage("§c" + args[0] + " §7is §cnot §7a valid number.");
