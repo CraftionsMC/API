@@ -3,15 +3,15 @@
  */
 package net.craftions.api.game.util;
 
-import net.craftions.api.config.Config;
+import jdk.jfr.Experimental;
 import net.craftions.api.game.Game;
 import net.craftions.api.game.Team;
 import org.bukkit.Location;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
-import java.util.Map;
 
+@Experimental
 public class GameBuilder {
 
     // Global variables
@@ -63,69 +63,77 @@ public class GameBuilder {
      * The in game spawn. You won't see any effect if {link #useTeamSpawns} is set to true and each team has a spawn location.
      */
     private Location spawn = null;
+    /**
+     * The teams of the game.
+     */
+    private ArrayList<Team> teams = new ArrayList<>();
 
-
-    public GameBuilder setName(String name){
+    public GameBuilder setName(String name) {
         this.name = name;
         return this;
     }
 
-    public GameBuilder setColorCode(String colorCode){
+    public GameBuilder setColorCode(String colorCode) {
         this.colorCode = colorCode;
         return this;
     }
 
-    public GameBuilder setMinPlayers(Integer minPlayers){
+    public GameBuilder setMinPlayers(Integer minPlayers) {
         this.minPlayers = minPlayers;
         return this;
     }
 
-    public GameBuilder setStartTime(Integer startTime){
+    public GameBuilder setStartTime(Integer startTime) {
         this.startTime = startTime;
         return this;
     }
 
-    public GameBuilder setEndTime(Integer endTime){
+    public GameBuilder setEndTime(Integer endTime) {
         this.endTime = endTime;
         return this;
     }
 
-    public GameBuilder setLanguageCode(String languageCode){
+    public GameBuilder setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
         return this;
     }
 
-    public GameBuilder setDefaultInventory(Inventory defaultInventory){
+    public GameBuilder setDefaultInventory(Inventory defaultInventory) {
         this.defaultInventory = defaultInventory;
         return this;
     }
 
-    public GameBuilder setWaitingLobby(Location waitingLobby){
+    public GameBuilder setWaitingLobby(Location waitingLobby) {
         this.waitingLobby = waitingLobby;
         return this;
     }
 
-    public GameBuilder setUseTeams(Boolean useTeams){
+    public GameBuilder setUseTeams(Boolean useTeams) {
         this.useTeams = useTeams;
         return this;
     }
 
-    public GameBuilder setTeamSize(Integer teamSize){
+    public GameBuilder setTeamSize(Integer teamSize) {
         this.teamSize = teamSize;
         return this;
     }
 
-    public GameBuilder setUseTeamSpawns(Boolean useTeamSpawns){
+    public GameBuilder setUseTeamSpawns(Boolean useTeamSpawns) {
         this.useTeamSpawns = useTeamSpawns;
         return this;
     }
 
-    public GameBuilder setSpawn(Location spawn){
+    public GameBuilder setSpawn(Location spawn) {
         this.spawn = spawn;
         return this;
     }
 
-    public Game build(){
+    public GameBuilder addTeam(Team t){
+        this.teams.add(t);
+        return this;
+    }
+
+    public Game build() {
         Game game = new Game(this.name, this.colorCode, this.minPlayers, this.startTime, this.endTime, this.languageCode);
         game.setUseTeams(this.useTeams);
         game.setUseTeamSpawns(this.useTeamSpawns);
@@ -133,6 +141,9 @@ public class GameBuilder {
         game.setTeamSize(this.teamSize);
         game.setWaitingLobby(this.waitingLobby);
         game.setDefaultInventory(this.defaultInventory);
+        for(Team t : this.teams){
+            game.addTeam(t);
+        }
         return game;
     }
 }
