@@ -4,9 +4,8 @@
  */
 package net.craftions.api.networking;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class NetUtils {
@@ -25,5 +24,19 @@ public class NetUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String httpGet(String webURL) throws Exception {
+        StringBuilder result = new StringBuilder();
+        URL url = new URL(webURL);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(conn.getInputStream()))) {
+            for (String line; (line = reader.readLine()) != null; ) {
+                result.append(line);
+            }
+        }
+        return result.toString();
     }
 }
