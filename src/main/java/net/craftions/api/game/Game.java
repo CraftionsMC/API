@@ -7,6 +7,7 @@ package net.craftions.api.game;
 import net.craftions.api.Api;
 import net.craftions.api.color.ColorCode;
 import net.craftions.api.config.Config;
+import net.craftions.api.game.commands.CommandStartGame;
 import net.craftions.api.game.events.GameEndEvent;
 import net.craftions.api.game.events.GameStartEvent;
 import net.craftions.api.game.events.bukkit.EventPlayerJoin;
@@ -266,6 +267,9 @@ public class Game {
     protected void initialize() {
         // listeners
         Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(this), Api.getInstance());
+        // commands
+        Api.getInstance().getCommand("start").setExecutor(new CommandStartGame());
+        CommandStartGame.game = this;
     }
 
     /**

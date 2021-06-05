@@ -4,3 +4,8 @@ main: net.craftions.api.Api
 api-version: 1.16
 load: STARTUP
 authors: [ MCTzOCK ]
+commands:
+  start:
+    permission: craftions.api.game.command.start
+    permission-message: Unknown command. Type "/help" for help.
+    usage: /start [time]
