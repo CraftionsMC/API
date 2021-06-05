@@ -10,6 +10,7 @@ import net.craftions.api.config.Config;
 import net.craftions.api.game.events.GameEndEvent;
 import net.craftions.api.game.events.GameStartEvent;
 import net.craftions.api.game.events.bukkit.EventPlayerJoin;
+import net.craftions.api.game.exceptions.GameException;
 import net.craftions.api.language.Language;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -82,6 +83,10 @@ public class Game {
      * Use Team Spawns instead of normal game spawn
      */
     private boolean useTeamSpawns;
+    /**
+     * The in game spawn. You won't see any effect if {link #useTeamSpawns} is set to true and each team has a spawn location.
+     */
+    private Location spawn;
 
 
     // Timer variables
@@ -95,27 +100,37 @@ public class Game {
     private Boolean isRunning = false;
 
     /**
-     * @param name The name of the game
-     * @param colorCode The color code used for the prefix
+     * @param name       The name of the game
+     * @param colorCode  The color code used for the prefix
      * @param minPlayers The minimum number of players
-     * @param startTime The time after the game starts when enough players joined
-     * @param endTime The time after the game ends
+     * @param startTime  The time after the game starts when enough players joined
+     * @param endTime    The time after the game ends
      */
-    public Game(String name, String colorCode, Integer minPlayers, Integer startTime, Integer endTime, String languageCode){
+    public Game(String name, String colorCode, Integer minPlayers, Integer startTime, Integer endTime, String languageCode) {
         this.name = name;
         this.colorCode = colorCode;
         this.minPlayers = minPlayers;
         this.startTime = startTime;
         this.endTime = endTime;
         this.languageCode = languageCode;
+        if(GameManager.createGame(this, false)){
+
+        }else {
+            try {
+                throw new GameException("Could not create the game! The name is already taken!");
+            } catch (GameException e) {
+                e.printStackTrace();
+            }
+        }
         this.initialize();
     }
 
     /**
      * Creates a Game Instance with values from the given config instance
+     *
      * @param configName The name of the Configuration Instance
      */
-    public Game(String configName){
+    public Game(String configName) {
         this.config = Config.getInstance(configName);
         this.name = (String) this.config.get("name");
         this.colorCode = ColorCode.from((String) this.config.get("colorCode"));
@@ -128,9 +143,10 @@ public class Game {
 
     /**
      * Creates a Game Instance from a Config File
+     *
      * @return The created game
      */
-    public static Game fromConfigFile(String gameName){
+    public static Game fromConfigFile(String gameName) {
         new Config(new File("plugins/" + gameName + "/game.config.yml"), gameName + ":temp-loaded:");
         return new Game(gameName + ":temp-loaded:");
     }
@@ -138,14 +154,14 @@ public class Game {
     /**
      * Saves the current Game options (name, color code, ...) to the configuration
      */
-    public void saveToConfig(){
-        if(this.config == null){
+    public void saveToConfig() {
+        if (this.config == null) {
             File root = new File("plugins/" + this.name);
             File configFile = new File(root.getPath() + "/game.config.yml");
-            if(!root.exists()){
+            if (!root.exists()) {
                 root.mkdirs();
             }
-            if(!configFile.exists()){
+            if (!configFile.exists()) {
                 try {
                     configFile.createNewFile();
                 } catch (IOException e) {
@@ -161,7 +177,7 @@ public class Game {
             this.config.set("languageCode", this.languageCode);
             this.config.reload(true);
             this.config = null;
-        }else {
+        } else {
             throw new UnsupportedOperationException("You can not use this method if you have loaded the settings from a config.");
         }
     }
@@ -169,16 +185,16 @@ public class Game {
     /**
      * Start the game with its default values
      */
-    public void start(){
+    public void start() {
         _startTimer = startTime;
         _startTimerId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Api.getInstance(), new Runnable() {
             @Override
             public void run() {
                 _startTimer--;
-                if(_startTimer == 0){
+                if (_startTimer == 0) {
                     Bukkit.getScheduler().cancelTask(_startTimerId);
                     startFinal();
-                }else if(_startTimer.toString().endsWith("0") || _startTimer.toString().endsWith("5") || _startTimer < 10){
+                } else if (_startTimer.toString().endsWith("0") || _startTimer.toString().endsWith("5") || _startTimer < 10) {
                     Bukkit.broadcastMessage(Language.getMessage(languageCode, 0x0).replaceAll("=s", _startTimer.toString()));
                 }
             }
@@ -187,9 +203,10 @@ public class Game {
 
     /**
      * Start the game with a specific start time (used for /start)
+     *
      * @param time The time after the game starts.
      */
-    public void start(int time){
+    public void start(int time) {
         this.startTime = time;
         this.start();
     }
@@ -197,18 +214,16 @@ public class Game {
     /**
      * Used for choosing the teams
      */
-    protected void processTeams(){
-        if(this.useTeams){
+    protected void processTeams() {
+        if (this.useTeams) {
             HashMap<Team, Integer> _teams = new HashMap<>();
             Random random = new Random();
-            int takenPlayers = 0;
-            for(Player p : Bukkit.getOnlinePlayers()){
-                boolean found = false;
-                while(!found){
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                while (true) {
                     int r = random.nextInt(this.teams.size());
-                    Team choosenTeam = this.teams.get(r);
-                    if(_teams.get(choosenTeam).equals(this.teamSize)){
-
+                    if (!_teams.get(this.teams.get(r)).equals(this.teamSize)) {
+                        this.teams.get(r).addPlayer(p);
+                        break;
                     }
                 }
             }
@@ -216,19 +231,40 @@ public class Game {
     }
 
     /**
-     * Starts the final game (after countdown)
+     * @param p The player
+     * @return The team of the player or null
      */
-    protected void startFinal(){
-        Bukkit.getPluginManager().callEvent(new GameStartEvent(this));
-        if(this.getDefaultInventory() != null){
-            for(Player p : Bukkit.getOnlinePlayers()){
-                p.getInventory().setContents(this.getDefaultInventory().getContents());
+    public Team getPlayerTeam(Player p) {
+        if (!this.getStarting() && this.getRunning()) {
+            for (Team t : this.getTeams()) {
+                if (t.getPlayers().contains(p)) {
+                    return t;
+                }
             }
         }
-        end();
+        return null;
     }
 
-    protected void initialize(){
+    /**
+     * Starts the final game (after countdown)
+     */
+    protected void startFinal() {
+        this.processTeams();
+        if (this.getDefaultInventory() != null) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.getInventory().setContents(this.getDefaultInventory().getContents());
+                if (this.useTeamSpawns) {
+                    p.teleport(this.getPlayerTeam(p).getSpawn());
+                } else {
+                    p.teleport(this.getSpawn());
+                }
+            }
+        }
+        Bukkit.getPluginManager().callEvent(new GameStartEvent(this));
+        this.end();
+    }
+
+    protected void initialize() {
         // listeners
         Bukkit.getPluginManager().registerEvents(new EventPlayerJoin(this), Api.getInstance());
     }
@@ -236,16 +272,16 @@ public class Game {
     /**
      * Ends the game after the given time.
      */
-    public void end(){
+    public void end() {
         _endTimer = endTime;
         _endTimerId = Bukkit.getScheduler().scheduleSyncRepeatingTask(Api.getInstance(), new Runnable() {
             @Override
             public void run() {
                 _endTimer--;
-                if(_endTimer == 0){
+                if (_endTimer == 0) {
                     Bukkit.getScheduler().cancelTask(_endTimerId);
                     endFinal();
-                }else if(_endTimer.toString().endsWith("0") || _endTimer.toString().endsWith("5") || _endTimer < 10){
+                } else if (_endTimer.toString().endsWith("0") || _endTimer.toString().endsWith("5") || _endTimer < 10) {
                     Bukkit.broadcastMessage(Language.getMessage(languageCode, 0x1).replaceAll("=s", _endTimer.toString()));
                 }
             }
@@ -255,7 +291,7 @@ public class Game {
     /**
      * Ends the final game (after countdown)
      */
-    protected void endFinal(){
+    protected void endFinal() {
         Bukkit.getPluginManager().callEvent(new GameEndEvent(this));
     }
 
@@ -275,10 +311,11 @@ public class Game {
 
     /**
      * Checks if a game can be loaded from a config
+     *
      * @param gameName The name of the saved game
      * @return true if the game can be loaded from a config
      */
-    public static boolean canLoadFromConfig(String gameName){
+    public static boolean canLoadFromConfig(String gameName) {
         return new File("plugins/" + gameName + "/game.config.yml").exists();
     }
 
@@ -334,7 +371,7 @@ public class Game {
     /**
      * @param team The team to be added to the game
      */
-    public void addTeam(Team team){
+    public void addTeam(Team team) {
         this.teams.add(team);
     }
 
@@ -378,5 +415,26 @@ public class Game {
      */
     public Location getWaitingLobby() {
         return waitingLobby;
+    }
+
+    /**
+     * @return All registered teams.
+     */
+    public ArrayList<Team> getTeams() {
+        return teams;
+    }
+
+    /**
+     * @return The in game spawn or null if using team spawns.
+     */
+    public Location getSpawn() {
+        return spawn;
+    }
+
+    /**
+     * @param spawn The new spawn.
+     */
+    public void setSpawn(Location spawn) {
+        this.spawn = spawn;
     }
 }
