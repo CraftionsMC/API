@@ -16,11 +16,11 @@ public class Team {
     /**
      * The name of the team.
      */
-    private String name;
+    private final String name;
     /**
      * The color code used for the team.
      */
-    private String color;
+    private final String color;
     /**
      * The spawn of the team
      */
@@ -28,23 +28,16 @@ public class Team {
     /**
      * All players in the team.
      */
-    private ArrayList<Player> players;
+    private final ArrayList<Player> players;
 
     /**
-     * @param name The name of the team.
+     * @param name  The name of the team.
      * @param color The color code used for the team.
      */
-    public Team(String name, String color){
+    public Team(String name, String color) {
         this.name = name;
         this.color = color;
         this.players = new ArrayList<>();
-    }
-
-    /**
-     * @param spawn The new spawn.
-     */
-    public void setSpawn(Location spawn) {
-        this.spawn = spawn;
     }
 
     /**
@@ -64,7 +57,7 @@ public class Team {
     /**
      * Adds a player to the team.
      */
-    public void addPlayer(Player p){
+    public void addPlayer(Player p) {
         this.players.add(p);
     }
 
@@ -80,5 +73,12 @@ public class Team {
      */
     public Location getSpawn() {
         return spawn;
+    }
+
+    /**
+     * @param spawn The new spawn.
+     */
+    public void setSpawn(Location spawn) {
+        this.spawn = spawn;
     }
 }

@@ -5,9 +5,6 @@ package net.craftions.api.game.util;
 
 import net.craftions.api.game.Team;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
 
 public class TeamBuilder {
 
@@ -24,22 +21,22 @@ public class TeamBuilder {
      */
     private Location spawn;
 
-    public TeamBuilder setName(String name){
+    public TeamBuilder setName(String name) {
         this.name = name;
         return this;
     }
 
-    public TeamBuilder setColor(String color){
+    public TeamBuilder setColor(String color) {
         this.color = color;
         return this;
     }
 
-    public TeamBuilder setSpawn(Location spawn){
+    public TeamBuilder setSpawn(Location spawn) {
         this.spawn = spawn;
         return this;
     }
 
-    public Team build(){
+    public Team build() {
         Team t = new Team(this.name, this.color);
         t.setSpawn(this.spawn);
         return t;

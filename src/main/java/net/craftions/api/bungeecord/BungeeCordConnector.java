@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 public class BungeeCordConnector {
 
-    public static void connect(Player player, String server){
+    public static void connect(Player player, String server) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         out.writeUTF("Connect");
         out.writeUTF(server);

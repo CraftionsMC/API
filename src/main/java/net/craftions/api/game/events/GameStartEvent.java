@@ -12,27 +12,26 @@ import org.jetbrains.annotations.NotNull;
 
 public class GameStartEvent extends Event implements Cancellable {
 
-    private Game game;
-
     public static HandlerList HANDLERS = new HandlerList();
+    private final Game game;
 
-    public GameStartEvent(Game game){
+    public GameStartEvent(Game game) {
         this.game = game;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     /**
      * @return The game that starts
      */
-    public Game getGame(){
+    public Game getGame() {
         return this.game;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList(){
         return HANDLERS;
     }
 

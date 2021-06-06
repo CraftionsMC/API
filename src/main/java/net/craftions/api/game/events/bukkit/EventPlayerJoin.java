@@ -30,7 +30,7 @@ public class EventPlayerJoin implements Listener {
                 e.getPlayer().sendMessage(Language.getMessage(this.game.getLanguageCode(), 0x4));
             }
         }
-        if(this.game.getStarting()){
+        if (this.game.getStarting()) {
             e.getPlayer().teleport(this.game.getWaitingLobby());
         }
 

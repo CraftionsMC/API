@@ -14,37 +14,37 @@ public class MySQL {
     /**
      * SQL query
      */
-    private String sql;
+    private final String sql;
 
     /**
      * MySQL Server host
      */
-    private String host;
+    private final String host;
 
     /**
      * MySQL Server port
      */
-    private String port;
+    private final String port;
 
     /**
      * MySQL Username
      */
-    private String username;
+    private final String username;
 
     /**
      * MySQL Password
      */
-    private String password;
+    private final String password;
 
     /**
      * MySQL Database
      */
-    private String database;
+    private final String database;
 
     /**
      * Additional parameters for the connection (e.g. timezone or ssl)
      */
-    private String additionalConnectionParameters;
+    private final String additionalConnectionParameters;
 
     /**
      * MySQL database connection
@@ -54,7 +54,7 @@ public class MySQL {
     /**
      * @param sql Your SQL query
      */
-    public MySQL(String sql, String host, String port, String username, String password, String database, String additionalConnectionParameters){
+    public MySQL(String sql, String host, String port, String username, String password, String database, String additionalConnectionParameters) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -72,13 +72,13 @@ public class MySQL {
     /**
      * @return The result of the query or null.
      */
-    public ResultSet executeQuery(){
+    public ResultSet executeQuery() {
         try {
             this.con = DriverManager.getConnection(getConnectionString(), username, password);
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery(sql);
             return rs;
-        }catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return null;
@@ -87,7 +87,7 @@ public class MySQL {
     /**
      * Execute Update with the given sql string.
      */
-    public void executeUpdate(){
+    public void executeUpdate() {
         try {
             this.con = DriverManager.getConnection(getConnectionString(), username, password);
             Statement st = con.createStatement();
@@ -101,7 +101,7 @@ public class MySQL {
      * Close connection and disconnect from database.
      * Attention! ResultSets can't be used after this method is called.
      */
-    public void close(){
+    public void close() {
         try {
             con.close();
         } catch (SQLException throwables) {
@@ -112,7 +112,7 @@ public class MySQL {
     /**
      * @return Connection URL to database.
      */
-    public String getConnectionString(){
+    public String getConnectionString() {
         return "jdbc:mysql://" + host + ":" + port + "/" + database + "?" + additionalConnectionParameters;
     }
 

@@ -14,19 +14,18 @@ import java.util.Set;
 
 public class Config {
 
-    private File c;
+    private static final HashMap<String, Config> instance = new HashMap<>();
+    private final File c;
     private FileConfiguration conf;
-
-    private static HashMap<String, Config> instance = new HashMap<>();
-
-    public static Config getInstance(String name) {
-        return instance.get(name);
-    }
 
     public Config(File configFile, String name) {
         this.c = configFile;
         this.reload(false);
         instance.put(name, this);
+    }
+
+    public static Config getInstance(String name) {
+        return instance.get(name);
     }
 
     public void reload(Boolean save) {
@@ -36,15 +35,15 @@ public class Config {
         this.conf = YamlConfiguration.loadConfiguration(this.c);
     }
 
-    public void set(String path, Object value){
+    public void set(String path, Object value) {
         this.conf.set(path, value);
     }
 
-    public Object get(String path){
+    public Object get(String path) {
         return this.conf.get(path);
     }
 
-    public Set<String> getAll(String path, Boolean keys){
+    public Set<String> getAll(String path, Boolean keys) {
         return this.conf.getConfigurationSection(path).getKeys(keys);
     }
 

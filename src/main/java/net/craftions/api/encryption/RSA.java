@@ -20,6 +20,7 @@ public class RSA {
 
     /**
      * Generate Keys
+     *
      * @param size Keysize
      * @return KeyPair
      * @throws Exception if anything goes wrong
@@ -33,8 +34,9 @@ public class RSA {
 
     /**
      * Encrypt a message
+     *
      * @param message Message
-     * @param pubKey Public Key
+     * @param pubKey  Public Key
      * @return encrypted message as byte array
      * @throws Exception if anything goes wrong
      */
@@ -47,6 +49,7 @@ public class RSA {
 
     /**
      * Decrypt message
+     *
      * @param message encrypted message as byte array
      * @param privKey Private Key
      * @return decrypted Message as String
@@ -63,6 +66,7 @@ public class RSA {
 
     /**
      * Get Public Key from String. You can use this for reading the public key form a file.
+     *
      * @param s Public Key as String
      * @return Public Key Object
      */
@@ -86,11 +90,12 @@ public class RSA {
 
     /**
      * Get Private Key from String. You can use this for reading the private key form a file.
+     *
      * @param s Private Key as String
      * @return Private Key Object
      */
     @Experimental
-    public static PrivateKey privFromString(String s){
+    public static PrivateKey privFromString(String s) {
         KeyFactory kf = null;
         try {
             kf = KeyFactory.getInstance("RSA");

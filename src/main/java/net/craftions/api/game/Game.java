@@ -34,15 +34,15 @@ public class Game {
     /**
      * The name of the game
      */
-    private String name;
+    private final String name;
     /**
      * The color code used for the prefix
      */
-    private String colorCode;
+    private final String colorCode;
     /**
      * The minimum number of players
      */
-    private Integer minPlayers;
+    private final Integer minPlayers;
     /**
      * The time to start the game
      */
@@ -50,7 +50,7 @@ public class Game {
     /**
      * The time to end the game
      */
-    private Integer endTime;
+    private final Integer endTime;
     /**
      * The configuration of the game
      */
@@ -58,7 +58,7 @@ public class Game {
     /**
      * The language of the game
      */
-    private String languageCode;
+    private final String languageCode;
     /**
      * The default inventory each player should get when the game starts
      */
@@ -71,7 +71,7 @@ public class Game {
     /**
      * Registered teams
      */
-    private ArrayList<Team> teams = new ArrayList<>();
+    private final ArrayList<Team> teams = new ArrayList<>();
     /**
      * Use Teams
      */
@@ -97,8 +97,8 @@ public class Game {
     private Integer _endTimerId;
 
     // State variables
-    private Boolean isStarting = false;
-    private Boolean isRunning = false;
+    private final Boolean isStarting = false;
+    private final Boolean isRunning = false;
 
     /**
      * @param name       The name of the game
@@ -114,9 +114,9 @@ public class Game {
         this.startTime = startTime;
         this.endTime = endTime;
         this.languageCode = languageCode;
-        if(GameManager.createGame(this, false)){
+        if (GameManager.createGame(this, false)) {
             this.initialize();
-        }else {
+        } else {
             try {
                 throw new GameException("Could not create the game! The name is already taken!");
             } catch (GameException e) {
@@ -149,6 +149,16 @@ public class Game {
     public static Game fromConfigFile(String gameName) {
         new Config(new File("plugins/" + gameName + "/game.config.yml"), gameName + ":temp-loaded:");
         return new Game(gameName + ":temp-loaded:");
+    }
+
+    /**
+     * Checks if a game can be loaded from a config
+     *
+     * @param gameName The name of the saved game
+     * @return true if the game can be loaded from a config
+     */
+    public static boolean canLoadFromConfig(String gameName) {
+        return new File("plugins/" + gameName + "/game.config.yml").exists();
     }
 
     /**
@@ -217,7 +227,7 @@ public class Game {
     protected void processTeams() {
         if (this.useTeams) {
             HashMap<Team, Integer> _teams = new HashMap<>();
-            for(Team t : this.teams){
+            for (Team t : this.teams) {
                 _teams.put(t, 0);
             }
             Random random = new Random();
@@ -314,16 +324,6 @@ public class Game {
     }
 
     /**
-     * Checks if a game can be loaded from a config
-     *
-     * @param gameName The name of the saved game
-     * @return true if the game can be loaded from a config
-     */
-    public static boolean canLoadFromConfig(String gameName) {
-        return new File("plugins/" + gameName + "/game.config.yml").exists();
-    }
-
-    /**
      * @return The name of the game
      */
     public String getName() {
@@ -408,17 +408,17 @@ public class Game {
     }
 
     /**
-     * @param waitingLobby The place where each player will be teleported to while there aren't enough players on the server
-     */
-    public void setWaitingLobby(Location waitingLobby) {
-        this.waitingLobby = waitingLobby;
-    }
-
-    /**
      * @return The place where each player will be teleported to while there aren't enough players on the server
      */
     public Location getWaitingLobby() {
         return waitingLobby;
+    }
+
+    /**
+     * @param waitingLobby The place where each player will be teleported to while there aren't enough players on the server
+     */
+    public void setWaitingLobby(Location waitingLobby) {
+        this.waitingLobby = waitingLobby;
     }
 
     /**

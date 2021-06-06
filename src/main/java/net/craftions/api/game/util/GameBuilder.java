@@ -64,7 +64,7 @@ public class GameBuilder {
     /**
      * The teams of the game.
      */
-    private ArrayList<Team> teams = new ArrayList<>();
+    private final ArrayList<Team> teams = new ArrayList<>();
 
     public GameBuilder setName(String name) {
         this.name = name;
@@ -126,7 +126,7 @@ public class GameBuilder {
         return this;
     }
 
-    public GameBuilder addTeam(Team t){
+    public GameBuilder addTeam(Team t) {
         this.teams.add(t);
         return this;
     }
@@ -139,7 +139,7 @@ public class GameBuilder {
         game.setTeamSize(this.teamSize);
         game.setWaitingLobby(this.waitingLobby);
         game.setDefaultInventory(this.defaultInventory);
-        for(Team t : this.teams){
+        for (Team t : this.teams) {
             game.addTeam(t);
         }
         return game;

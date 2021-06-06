@@ -14,8 +14,8 @@ public class ColorCode {
     /**
      * Inits the color code map
      */
-    protected static void initMap(){
-        if(!(replacements.size() > 0)){
+    protected static void initMap() {
+        if (!(replacements.size() > 0)) {
             replacements.put("§4", "&4");
             replacements.put("§c", "&c");
             replacements.put("§6", "&6");
@@ -40,7 +40,7 @@ public class ColorCode {
             replacements.put("§k", "&k");
 
             replacementsReversed.clear();
-            for(String s : replacements.keySet()){
+            for (String s : replacements.keySet()) {
                 replacementsReversed.put(replacements.get(s), s);
             }
         }
@@ -49,12 +49,13 @@ public class ColorCode {
 
     /**
      * Reformats a text (changes {@literal §}- color codes to {@literal &}-color codes)
+     *
      * @param text The text to be reformatted
      * @return The reformatted text
      */
-    public static String from(String text){
+    public static String from(String text) {
         initMap();
-        for(String s : replacements.keySet()){
+        for (String s : replacements.keySet()) {
             text = text.replaceAll(s, replacements.get(s));
         }
         return text;
@@ -62,12 +63,13 @@ public class ColorCode {
 
     /**
      * Reformats a text (changes {@literal &}-color codes to {@literal §}-color codes)
+     *
      * @param text The text to be reformatted
      * @return The reformatted text
      */
-    public static String to(String text){
+    public static String to(String text) {
         initMap();
-        for(String s : replacementsReversed.keySet()){
+        for (String s : replacementsReversed.keySet()) {
             text = text.replaceAll(s, replacementsReversed.get(s));
         }
         return text;

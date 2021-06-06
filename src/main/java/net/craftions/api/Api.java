@@ -2,12 +2,15 @@ package net.craftions.api;
 
 import net.craftions.api.color.ColorCode;
 import net.craftions.api.language.Language;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class Api extends JavaPlugin {
 
     protected static Api instance;
+
+    public static Api getInstance() {
+        return instance;
+    }
 
     @Override
     public void onEnable() {
@@ -20,9 +23,5 @@ public final class Api extends JavaPlugin {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-    }
-
-    public static Api getInstance() {
-        return instance;
     }
 }

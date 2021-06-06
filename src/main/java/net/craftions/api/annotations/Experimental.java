@@ -3,10 +3,9 @@ package net.craftions.api.annotations;
 import java.lang.annotation.*;
 
 /**
- *
  * This element has an experimental maturity.  Use with caution.
- *
- *
+ * <p>
+ * <p>
  * NOTE: The developers of this element is not responsible for the issues created,
  * using it is not suggested for production environment. If you see this annotation do this, do not do that etc
  * Enjoy responsibly....
@@ -19,4 +18,5 @@ import java.lang.annotation.*;
         ElementType.CONSTRUCTOR, ElementType.LOCAL_VARIABLE, ElementType.PACKAGE,
         ElementType.ANNOTATION_TYPE, ElementType.TYPE_USE, ElementType.TYPE_PARAMETER
 })
-public @interface Experimental {}
+public @interface Experimental {
+}

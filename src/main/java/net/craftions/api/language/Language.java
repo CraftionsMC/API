@@ -10,13 +10,12 @@ import java.util.HashMap;
 
 public class Language {
 
+    public static String keyWordColor = ColorCode.to("&c");
+    public static String normalColor = ColorCode.to("&7");
     protected static HashMap<Integer, String> de_de = new HashMap<>();
     protected static HashMap<Integer, String> en_us = new HashMap<>();
 
-    public static String keyWordColor = ColorCode.to("&c");
-    public static String normalColor = ColorCode.to("&7");
-
-    public static void initMaps(){
+    public static void initMaps() {
         de_de.put(0x0, normalColor + "Das Spiel startet in " + keyWordColor + "=s " + normalColor + "Sekunden");
         en_us.put(0x0, normalColor + "The game starts in " + keyWordColor + "=s " + normalColor + " seconds");
         de_de.put(0x1, normalColor + "Das Spiel endet in " + keyWordColor + "=s " + normalColor + "Sekunden");
@@ -29,9 +28,9 @@ public class Language {
         en_us.put(0x4, normalColor + "The game is already " + keyWordColor + "running " + normalColor + ". You are a " + keyWordColor + " spectator.");
     }
 
-    public static String getMessage(String local, int messageID){
+    public static String getMessage(String local, int messageID) {
         HashMap<Integer, String> toTake;
-        switch (local){
+        switch (local) {
             case "de_de":
                 toTake = de_de;
                 break;
@@ -41,9 +40,9 @@ public class Language {
             default:
                 toTake = en_us;
         }
-        if(toTake.containsKey(messageID)){
+        if (toTake.containsKey(messageID)) {
             return toTake.get(messageID);
-        }else {
+        } else {
             return "§cThe message with the ID §e" + messageID + " §ccould not be found.";
         }
     }

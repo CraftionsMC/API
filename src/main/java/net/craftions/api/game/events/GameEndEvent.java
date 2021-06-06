@@ -10,31 +10,28 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.logging.Handler;
-
 public class GameEndEvent extends Event implements Cancellable {
 
-    private Game game;
-
     public static HandlerList HANDLERS = new HandlerList();
+    private final Game game;
 
-    public GameEndEvent(Game game){
+    public GameEndEvent(Game game) {
         this.game = game;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 
     /**
      * @return The game that ends
      */
-    public Game getGame(){
+    public Game getGame() {
         return this.game;
     }
 
     @Override
     public @NotNull HandlerList getHandlers() {
-        return HANDLERS;
-    }
-
-    public static HandlerList getHandlerList(){
         return HANDLERS;
     }
 

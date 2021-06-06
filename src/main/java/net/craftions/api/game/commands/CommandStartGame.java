@@ -15,17 +15,17 @@ public class CommandStartGame implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if(game == null){
+        if (game == null) {
             sender.sendMessage("§7There is §cno §7game that can be started!");
-        }else {
-            if(args.length == 0){
+        } else {
+            if (args.length == 0) {
                 game.start(10);
                 sender.sendMessage("§aSuccessfully §7started the game §e" + game.getName());
-            }else {
+            } else {
                 try {
                     game.start(Integer.parseInt(args[0]) + 1);
                     sender.sendMessage("§aSuccessfully §7started the game §e" + game.getName());
-                }catch (NumberFormatException ex){
+                } catch (NumberFormatException ex) {
                     sender.sendMessage("§c" + args[0] + " §7is §cnot §7a valid number.");
                 }
             }

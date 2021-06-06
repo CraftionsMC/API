@@ -7,29 +7,25 @@ import java.util.ArrayList;
 
 public class GameManager {
 
-    private static ArrayList<Game> games = new ArrayList<>();
+    private static final ArrayList<Game> games = new ArrayList<>();
 
-    private static void addGame(Game game){
+    private static void addGame(Game game) {
         games.add(game);
     }
 
-    public static void removeGame(Game game){
+    public static void removeGame(Game game) {
         games.remove(game);
     }
 
     /**
-     * @param game The game instance
+     * @param game  The game instance
      * @param force If true this function will always return true.
      * @return True if the game could be created. Overwritten if force is true
      */
-    public static boolean createGame(Game game, Boolean force){
-        if(games.contains(game)){
-            if(force){
-                return true;
-            }else {
-                return false;
-            }
-        }else {
+    public static boolean createGame(Game game, Boolean force) {
+        if (games.contains(game)) {
+            return force;
+        } else {
             addGame(game);
             return true;
         }
@@ -39,9 +35,9 @@ public class GameManager {
      * @param name The name of the game
      * @return The game or null.
      */
-    public static Game getGameByName(String name){
-        for(Game g : games){
-            if(g.getName().equals(name)){
+    public static Game getGameByName(String name) {
+        for (Game g : games) {
+            if (g.getName().equals(name)) {
                 return g;
             }
         }
