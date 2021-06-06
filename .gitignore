@@ -8,6 +8,9 @@
 # IntelliJ
 out/
 
+# Temporary files
+temp
+
 # Compiled class file
 *.class
 
