@@ -1,0 +1,16 @@
+net.craftions.api
+net.craftions.api.annotations
+net.craftions.api.bungeecord
+net.craftions.api.color
+net.craftions.api.config
+net.craftions.api.database
+net.craftions.api.encryption
+net.craftions.api.game
+net.craftions.api.game.commands
+net.craftions.api.game.events
+net.craftions.api.game.events.bukkit
+net.craftions.api.game.exceptions
+net.craftions.api.game.util
+net.craftions.api.language
+net.craftions.api.networking
+net.craftions.api.util
