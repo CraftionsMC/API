@@ -71,8 +71,8 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <name>GitHub OWNER Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/MCTzOCK/CraftionsAPI</url>
+            <name>GitHub CraftionsMC Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/CraftionsMC/API</url>
         </repository>
     </distributionManagement>
 
