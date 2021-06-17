@@ -151,10 +151,10 @@ public class MyColorCodeClass {
 ```
 
 ### MySQL Connections
-Please visit ![MCTzOCK/JavaMySQL](https://github.com/MCTzOCK/JavaMySQL/#example)
+Please visit [MCTzOCK/JavaMySQL](https://github.com/MCTzOCK/JavaMySQL/#example)
 
 ### RSA Encryption
-Please visit ![MCTzOCK/RSAKeys](https://github.com/MCTzOCK/RSAKeys/#example)
+Please visit [MCTzOCK/RSAKeys](https://github.com/MCTzOCK/RSAKeys/#example)
 
 ### Download a File
 
