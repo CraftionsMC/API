@@ -4,6 +4,7 @@
 package net.craftions.api.util;
 
 import com.mojang.authlib.GameProfile;
+import net.craftions.api.annotations.Experimental;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -21,6 +22,7 @@ public class PlayerHeads {
      * @param textureUrl The url of the texture the head should take
      * @return The head
      */
+    @Experimental
     public static ItemStack getHead(String textureUrl){
         ItemStack head = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
         if(textureUrl.isEmpty())
