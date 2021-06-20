@@ -53,7 +53,5 @@ class Booster constructor(
         fun boostAwayFrom(entity: Entity, location: Location, power: Double) {
             boostTo(entity, location, -power)
         }
-
-
     }
 }
