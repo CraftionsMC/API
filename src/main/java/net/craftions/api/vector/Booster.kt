@@ -5,7 +5,7 @@ import org.bukkit.entity.Entity
 import org.bukkit.util.Vector
 
 class Booster constructor(
-        val location: Location
+    val location: Location
 ) {
     private val loc = location.clone()
 
