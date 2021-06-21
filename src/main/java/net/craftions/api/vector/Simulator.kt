@@ -3,7 +3,7 @@ package net.craftions.api.vector
 import org.bukkit.Location
 
 class Simulator constructor(
-        val location: Location
+    val location: Location
 ) {
     private val loc = location.clone()
 
@@ -38,6 +38,16 @@ class Simulator constructor(
         return moveUp(-range)
     }
 
+    fun setPitch(value: Float): Simulator {
+        loc.pitch = value
+        return this;
+    }
+
+    fun setYaw(value: Float): Simulator {
+        loc.yaw = value
+        return this
+    }
+
     fun turnRight(range: Float): Simulator {
         loc.yaw += range
         return this
@@ -57,6 +67,6 @@ class Simulator constructor(
     }
 
     fun simulate(): Location {
-        return loc.clone()
+        return loc.clone().apply { direction = location.direction }
     }
 }
