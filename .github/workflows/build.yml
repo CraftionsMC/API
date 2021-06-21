@@ -13,4 +13,4 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-      - run: mvn install
+      - run: mvn -DoutputDirectory=.out install
